@@ -1,7 +1,9 @@
 package com.nakuls.weatherapplication.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nakuls.weatherapplication.data.remote.WeatherRepository
 import com.nakuls.weatherapplication.utils.Constants
 import com.nakuls.weatherapplication.data.remote.RetrofitInstance
 import com.nakuls.weatherapplication.data.remote.WeatherAPI
@@ -11,13 +13,18 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import kotlin.math.log
 
 class WeatherViewModel(
-    private val weatherAPI: WeatherAPI = RetrofitInstance.weatherAPI
+    private val weatherRepository: WeatherRepository
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(WeatherUIState())
     val uiState: StateFlow<WeatherUIState> = _uiState.asStateFlow()
+
+    init {
+        Log.i("weather", "init")
+    }
 
     fun getWeatherForCity(city: String){
         _uiState.update { currentState ->
@@ -27,7 +34,7 @@ class WeatherViewModel(
         }
         viewModelScope.launch {
             try {
-                val response = weatherAPI.getWeather(Constants.apikey, city)
+                val response = weatherRepository.getWeather(Constants.apikey, city)
                 if (response.isSuccessful) {
                     response.body()?.let { weatherObj ->
                         _uiState.update { currentState ->

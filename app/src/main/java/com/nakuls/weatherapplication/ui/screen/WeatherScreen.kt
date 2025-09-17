@@ -44,9 +44,10 @@ import com.nakuls.weatherapplication.data.model.Condition
 import com.nakuls.weatherapplication.data.model.Current
 import com.nakuls.weatherapplication.data.model.Location
 import com.nakuls.weatherapplication.data.model.Weather
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun WeatherScreen(weatherViewModel: WeatherViewModel = viewModel(),
+fun WeatherScreen(weatherViewModel: WeatherViewModel = koinViewModel(),
                   innerPadding: PaddingValues) {
 
     val weatherUIState by weatherViewModel.uiState.collectAsState()

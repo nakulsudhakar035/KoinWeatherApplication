@@ -36,7 +36,7 @@ Compose UI Testing - UI component testing
 Turbine - Flow testing
 
 Other Technologies
-Dependency Injection (Ready for Hilt)
+Dependency Injection (Koin)
 
 Git - Version control
 
